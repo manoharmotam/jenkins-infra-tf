@@ -16,15 +16,22 @@ resource "aws_security_group" "jenkins" {
   name = "jenkins-${each.key}"
   description = "SG group created for jenkins ${each.key} node"
 
+  dynamic "ingress" {
+    for_each = concat(
+      local.common_ingress_rules, 
+      lookup(local.extra_ingress_rules, each.key, [])
+    )
+
+    content {
+      from_port = ingress.value.port
+      to_port = ingress.value.port
+      protocol = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr
+      security_groups = ingress.value.sg_id
+    }
+  }
+
   tags = merge(var.tags, {
     "Name" = "jenkins-${each.key}"
   })
 }
-
-# resource "aws_security_group" "jenkins-worker" {
-#     vpc_id = aws_vpc.main.id
-#     name = "jenkins-worker"
-
-    
-#     description = "SG group created for worker node"
-# }

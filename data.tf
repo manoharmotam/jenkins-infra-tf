@@ -12,3 +12,15 @@ data "aws_ami" "ami2" {
     values = ["/dev/xvda"]
   }
 }
+
+data "aws_security_group" "bastion" {
+  filter {
+    name = "group-name"
+    values = ["launch-wizard-1"]
+  }
+
+  filter {
+    name = "vpc-id"
+    values = ["vpc-01c6ca06f7ddcb51e"]
+  }
+}
