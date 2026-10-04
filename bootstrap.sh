@@ -6,5 +6,6 @@ sudo rpm --import https://pkg.jenkins.io/rpm-stable/jenkins.io-2026.key
 sudo yum upgrade
 sudo yum install java-21-amazon-corretto -y
 sudo yum install jenkins -y
+sudo mkdir -p /var/lib/jenkins/.ssh && sudo touch /var/lib/jenkins/.ssh/known_hosts
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
