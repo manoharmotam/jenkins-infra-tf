@@ -3,7 +3,7 @@ resource "aws_instance" "jenkins_infra" {
   ami = local.ami_id
   instance_type = each.value.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins[each.key].id]
-  key_name = "ami2"
+  key_name = var.key_name
   user_data = file("${path.module}/bootstrap.sh")
   root_block_device {
     delete_on_termination = true

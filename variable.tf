@@ -28,3 +28,9 @@ variable "instances" {
     }
   }
 }
+
+
+variable "key_name" {
+  type = string
+  default = "ami2"
+}
