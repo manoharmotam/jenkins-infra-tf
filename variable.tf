@@ -29,8 +29,15 @@ variable "instances" {
   }
 }
 
-
 variable "key_name" {
   type = string
   default = "ami2"
+}
+
+variable "ssh_port"{
+  default = 22
+}
+
+variable "custom_port"{
+  default = 8080
 }
