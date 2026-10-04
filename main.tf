@@ -8,6 +8,10 @@ resource "aws_instance" "jenkins_infra" {
   tags = merge(var.tags, {
     "Name" = "jenkins-${each.key}"
   })
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group" "jenkins" {
@@ -26,12 +30,16 @@ resource "aws_security_group" "jenkins" {
       from_port = ingress.value.port
       to_port = ingress.value.port
       protocol = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr
-      security_groups = ingress.value.sg_id
+      cidr_blocks = ingress.value.cidr != null ? ingress.value.cidr : null
+      security_groups = ingress.value.sg_id != null ? ingress.value.sg_id : null
     }
   }
 
   tags = merge(var.tags, {
     "Name" = "jenkins-${each.key}"
   })
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

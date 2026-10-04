@@ -5,7 +5,7 @@ locals {
     { 
       port = 22
       protocol = "TCP"
-      sg_id = ["bastion_sg_id"]
+      sg_id = [local.bastion_sg_id]
       cidr = null
     }
   ]
