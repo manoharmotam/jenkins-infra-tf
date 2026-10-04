@@ -4,7 +4,7 @@ resource "aws_instance" "jenkins_infra" {
   instance_type = each.value.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins[each.key].id]
   key_name = "ami2"
-
+  user_data = templatefile("${path.path.module}/bootstrap.tftpl")
   root_block_device {
     delete_on_termination = true
     encrypted = false
