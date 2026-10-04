@@ -5,6 +5,17 @@ resource "aws_instance" "jenkins_infra" {
   vpc_security_group_ids = [aws_security_group.jenkins[each.key].id]
   key_name = "ami2"
 
+  root_block_device {
+    delete_on_termination = true
+    encrypted = false
+    volume_size = "50"
+    volume_type = "gp3"
+
+    tags = merge(var.tags, {
+      "Name" = "jenkins-${each.key}"
+  }
+}
+
   tags = merge(var.tags, {
     "Name" = "jenkins-${each.key}"
   })
