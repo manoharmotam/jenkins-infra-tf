@@ -18,7 +18,7 @@ variable "instance_type" {
 }
 
 variable "instances" {
-  type = map(string)
+  type = map(any)
   default = {
     master = {
       instance_type = "t3.small"

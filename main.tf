@@ -2,9 +2,7 @@ resource "aws_instance" "jenkins_infra" {
   for_each = var.instances
   ami = local.ami_id
   instance_type = each.value.instance_type
-  security_groups = [aws_security_group.jenkins_infra.id,
-    aws.
-  ]
+  vpc_security_group_ids = [aws_security_group.jenkins[each.key].id]
   key_name = "ami2"
 
   tags = merge(var.tags, {
@@ -13,15 +11,20 @@ resource "aws_instance" "jenkins_infra" {
 }
 
 resource "aws_security_group" "jenkins" {
-    vpc_id = aws_vpc.main.id
-    name = "jenkins-master"
-    description = "SG group created for jenkins ${each.key} node"
+  for_each = var.instances
+
+  name = "jenkins-${each.key}"
+  description = "SG group created for jenkins ${each.key} node"
+
+  tags = merge(var.tags, {
+    "Name" = "jenkins-${each.key}"
+  })
 }
 
-resource "aws_security_group" "jenkins-worker" {
-    vpc_id = aws_vpc.main.id
-    name = "jenkins-worker"
+# resource "aws_security_group" "jenkins-worker" {
+#     vpc_id = aws_vpc.main.id
+#     name = "jenkins-worker"
 
     
-    description = "SG group created for worker node"
-}
+#     description = "SG group created for worker node"
+# }
