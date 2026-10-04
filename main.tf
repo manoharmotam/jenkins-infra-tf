@@ -13,7 +13,7 @@ resource "aws_instance" "jenkins_infra" {
 
     tags = merge(var.tags, {
       "Name" = "jenkins-${each.key}"
-  }
+  })
 }
 
   tags = merge(var.tags, {
