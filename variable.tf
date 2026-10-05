@@ -22,10 +22,10 @@ variable "instances" {
   default = {
     master = {
       instance_type = "t3.small"
-    },
-    worker = {
-      instance_type = "t3.micro"
     }
+    #    worker = {
+    # instance_type = "t3.micro"
+    # }
   }
 }
 
